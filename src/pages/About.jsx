@@ -66,7 +66,7 @@ function About() {
   };
 
   return (
-    <div className="w-full h-full overflow-y-auto ">
+    <div className="w-full h-full overflow-y-auto pt-[15px]">
       <div className=" w-full h-full  p-6">
         <h2 className="text-3xl font-bold text-teal-600  mb-6">
           Edit Portfolio
@@ -262,7 +262,7 @@ function About() {
           {/* Save Button */}
           <button
             type="submit"
-            className="w-[250px] mb-[20px] p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-[250px] p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             Save Portfolio
           </button>

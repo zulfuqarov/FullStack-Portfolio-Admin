@@ -4,7 +4,7 @@ import Sidebar from "../components/SideBar";
 
 const Admin = () => {
   return (
-    <div className="h-full w-full flex ">
+    <div className="h-full w-full flex">
       <Sidebar />
       <Outlet />
     </div>

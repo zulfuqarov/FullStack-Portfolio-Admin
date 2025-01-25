@@ -1,12 +1,4 @@
 import { useState } from "react";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaInstagram,
-  FaFacebook,
-  FaYoutube,
-} from "react-icons/fa";
-
 function About() {
   const [formData, setFormData] = useState({
     name: "",
@@ -74,8 +66,8 @@ function About() {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className=" w-full h-full  p-6 rounded-lg shadow-lg">
+    <div className="w-full h-full overflow-y-auto ">
+      <div className=" w-full h-full  p-6">
         <h2 className="text-3xl font-bold text-teal-600  mb-6">
           Edit Portfolio
         </h2>
@@ -270,7 +262,7 @@ function About() {
           {/* Save Button */}
           <button
             type="submit"
-            className="w-[250px]  p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-[250px] mb-[20px] p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             Save Portfolio
           </button>

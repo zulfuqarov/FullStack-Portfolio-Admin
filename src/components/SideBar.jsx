@@ -5,7 +5,7 @@ import { FiPhone, FiLogOut } from "react-icons/fi";
 
 const Sidebar = () => {
   return (
-    <div className="h-full pt-[10px] relative max-[991px]:fixed max-[991px]:z-50">
+    <div className="h-full pt-[10px] relative max-[991px]:fixed max-[991px]:z-50 top-0 max-[991px]:hidden">
       <div className="h-full ">
         <div className="sidebar p-2 w-[300px] overflow-y-auto text-center h-full bg-[#2C2C2C]">
           <Link

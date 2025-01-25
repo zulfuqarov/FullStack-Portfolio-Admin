@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaBars } from "react-icons/fa";
+
 const Logo = () => {
   return (
     <div className="flex p-6">
@@ -11,6 +13,8 @@ const Logo = () => {
         <span className="text-teal-600">get</span>
         <span className="text-teal-400 ml-1">portfolio</span>
       </Link>
+
+      <FaBars className="text-3xl text-teal-600 ml-auto cursor-pointer hidden max-[991px]:block" />
     </div>
   );
 };

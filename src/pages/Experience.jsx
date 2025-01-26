@@ -1,6 +1,5 @@
-import { useState } from "react";
-
-export default function Experience() {
+import React, { useState } from "react";
+const Experience = () => {
   const [formData, setFormData] = useState({
     role: "",
     jobTitle: "",
@@ -127,7 +126,9 @@ export default function Experience() {
         </form>
       </div>
 
-      <p className="text-2xl font-semibold text-teal-600 text-center py-6 mb-[30px] border-b-2 border-teal-300 w-full">Experience List</p>
+      <p className="text-2xl font-semibold text-teal-600 text-center py-6 mb-[30px] border-b-2 border-teal-300 w-full">
+        Experience List
+      </p>
 
       {/* Deneyim Listesi */}
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -244,4 +245,6 @@ export default function Experience() {
       )}
     </div>
   );
-}
+};
+
+export default Experience;

@@ -16,7 +16,7 @@ const App = () => {
     <div className="h-screen flex flex-col ">
       <ContextAdmin>
         <Logo />
-        <div className="pt-[80px]">
+        
           <Routes>
             <Route path="/" element={<Admin />}>
               <Route index element={<AdminWelcome />} />
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
           </Routes>
-        </div>
+        
       </ContextAdmin>
     </div>
   );

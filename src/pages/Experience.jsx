@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 const Experience = () => {
   const [formData, setFormData] = useState({
     role: "",
@@ -131,35 +133,38 @@ const Experience = () => {
       </p>
 
       {/* Deneyim Listesi */}
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="max-w-4xl mx-auto space-y-4">
         {experiences.map((experience, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between hover:shadow-xl transition duration-300 ease-in-out"
+            className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-between hover:shadow-xl duration-300 ease-in-out"
           >
-            <div>
-              <h3 className="text-xl font-semibold text-teal-600">
+            {/* Sol Kısım: Metin */}
+            <div className="flex flex-col space-y-1">
+              <h3 className="text-lg font-semibold text-teal-600">
                 {experience.role}
               </h3>
               <p className="text-gray-600 text-sm font-medium">
                 {experience.jobTitle}
               </p>
-              <p className="text-gray-500 text-sm mt-2">
-                {experience.description}
-              </p>
+              <p className="text-gray-500 text-sm">{experience.description}</p>
             </div>
-            <div className="flex justify-end space-x-2 mt-4">
+
+            {/* Sağ Kısım: Butonlar */}
+            <div className="flex items-center space-x-4">
               <button
                 onClick={() => handleEdit(index)}
-                className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600"
+                className="group flex items-center px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
               >
-                Edit
+                <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
+                <span>Edit</span>
               </button>
               <button
                 onClick={() => handleDelete(index)}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                className="group flex items-center px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
               >
-                Delete
+                <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
+                <span>Delete</span>
               </button>
             </div>
           </div>

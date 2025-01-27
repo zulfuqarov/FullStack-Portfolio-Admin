@@ -1,7 +1,8 @@
 import { useState } from "react";
 function About() {
   const [formData, setFormData] = useState({
-    name: "",
+    fitstName: "",
+    lastName: "",
     position: "",
     bio: "",
     image: null,
@@ -61,7 +62,6 @@ function About() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic, such as sending data to the server
     console.log("Portfolio data submitted", formData);
   };
 
@@ -73,7 +73,7 @@ function About() {
         </h2>
 
         <form
-          className="flex flex-col justify-center items-center"
+          className="flex flex-col justify-center items-center pb-[20px]"
           onSubmit={handleSubmit}
         >
           {/* Image Upload */}
@@ -101,21 +101,39 @@ function About() {
             </label>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-[30px]">
+          <div>
             {/* Position */}
             <div>
               {/* Name */}
               <div className="mb-4">
                 <label
-                  htmlFor="name"
+                  htmlFor="fitstName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Name
+                  First Name
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
+                  id="fitstName"
+                  name="fitstName"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  placeholder="Enter user's name"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"

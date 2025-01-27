@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 
 const Projects = () => {
   const [formData, setFormData] = useState({
@@ -149,50 +151,38 @@ const Projects = () => {
       <p className="text-2xl font-semibold text-teal-600 text-center py-6 border-b-2 border-teal-300 w-full mb-[30px]">
         Project List
       </p>
-      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="max-w-5xl mx-auto space-y-4 p-4">
         {projects.map((project, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-md p-4 flex flex-col justify-between"
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4 flex items-center justify-between"
           >
-            <div>
-              <h3 className="text-lg font-bold text-teal-600">
+            <div className="flex flex-col space-y-1">
+              <h3 className="text-lg font-bold text-teal-700">
                 {project.title}
               </h3>
-              <p className="text-gray-700 text-sm font-medium">
-                {project.description}
-              </p>
-              <p className="text-gray-700 text-sm font-medium">
+
+              <p className="text-gray-600 text-sm">
                 <strong>Position:</strong> {project.position}
               </p>
-              <div className="mt-2 space-y-1">
-                {project.projectUrl && (
-                  <p>
-                    <strong>Project URL:</strong>{" "}
-                    <a
-                      href={project.projectUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-teal-500"
-                    >
-                      {project.projectUrl}
-                    </a>
-                  </p>
-                )}
-              </div>
+
+              <p className="text-gray-500 text-xs">{project.description}</p>
             </div>
-            <div className="flex justify-end space-x-2 mt-4">
+
+            <div className="flex space-x-4">
               <button
                 onClick={() => handleEdit(index)}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                className="group flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
               >
-                Edit
+                <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
+                <span className="hidden sm:block">Edit</span>
               </button>
               <button
                 onClick={() => handleDelete(index)}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                className="group flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
               >
-                Delete
+                <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
+                <span className="hidden sm:block">Delete</span>
               </button>
             </div>
           </div>

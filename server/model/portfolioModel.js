@@ -79,8 +79,12 @@ const portfolioSchema = new mongoose.Schema({
             type: String,
         },
     },
-    searclink:{
-        
+    getportfolio: {
+        type: String,
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
     }
 });
 

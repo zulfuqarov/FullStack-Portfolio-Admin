@@ -86,27 +86,28 @@ router.post("/login", async (req, res) => {
     }
 })
 
-// router.post("/logout", async (req, res) => {
-//     const token = req.cookies.jwtToken;
+router.post("/Logout", async (req, res) => {
+    const token = req.cookies.jwtToken;
 
-//     try {
-//         if (!token) {
-//             res.status(400).json({ message: "profile not sigin" });
-//             return;
-//         }
-//         res.clearCookie("jwtToken", {
-//             httpOnly: true,
-//             secure: true,
-//             sameSite: "strict",
-//         });
+    try {
+        if (!token) {
+            res.status(400).json({ message: "profile not sigin" });
+            return;
+        }
+        res.clearCookie("jwtToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+        });
 
-        
+        res.status(200).json({ message: "Profile logged out successfully" });
 
-//         res.status(200).json({ message: "Logout successfully" });
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ message: "Internal server error" });
-//     }
-// });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 export default router;
 

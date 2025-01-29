@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.use(CheckToken);
 
-router.get("/", (req, res) => {
-    res.send("portfolio")
+router.put("/:id", (req, res) => {
+    
 })
 
 export default router;

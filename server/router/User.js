@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../model/userModel.js";
+import portfolio from "../model/portfolioModel.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const router = express.Router();
@@ -53,7 +54,7 @@ router.post("/login", async (req, res) => {
             return res.status(400).json({ msg: "All fields are required" })
         }
 
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).populate("portfolio")
         if (!user) {
             return res.status(400).json({ msg: "Username or password is incorrect" });
         }
@@ -78,7 +79,30 @@ router.post("/login", async (req, res) => {
             maxAge: 1000 * 60 * 60 * 24 * 7,
         });
 
-        res.status(200).json({ msg: "Login successfully" })
+        const findPortfolio = await portfolio.findOne({
+            userId: user._id,
+        })
+
+        if (!findPortfolio) {
+            const newPortfolio = new portfolio({
+                firstname: user.firstname,
+                lastname: user.lastname,
+                position: user.position,
+                getportfolio: `${user.firstname}${user.lastname}`,
+                userId: user._id,
+                contact: {
+                    email: user.email,
+                }
+            })
+            await newPortfolio.save()
+
+            await User.findByIdAndUpdate(user._id, { portfolio: newPortfolio._id })
+            
+            return res.status(200).json({ msg: "Portfolio created successfully and logged in", portfolio: newPortfolio });
+        }
+
+        return res.status(200).json({ msg: "Logged in successfully", portfolio: user.portfolio });
+
 
     } catch (error) {
         console.log(error)

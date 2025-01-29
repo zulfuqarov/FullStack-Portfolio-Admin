@@ -3,35 +3,44 @@ import mongoose from "mongoose";
 const portfolioSchema = new mongoose.Schema({
     img: {
         type: String,
+        default: null
     },
     firstname: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        default: null
     },
     lastname: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        default: null
     },
     position: {
         type: String,
-        required: true
+        required: true,
+        default: null
     },
     bio: {
         type: String,
+        default: null
     },
     linkedinUrl: {
         type: String,
+        default: null
     },
     githubUrl: {
         type: String,
+        default: null
     },
     instagramUrl: {
         type: String,
+        default: null
     },
     youtubeUrl: {
         type: String,
+        default: null
     },
     experience: [
         {
@@ -65,26 +74,33 @@ const portfolioSchema = new mongoose.Schema({
     contact: {
         email: {
             type: String,
+            default: null
         },
         phone: {
             type: String,
+            default: null
         },
         address: {
             type: String,
+            default: null
         },
         city: {
             type: String,
+            default: null
         },
         country: {
             type: String,
+            default: null
         },
     },
     getportfolio: {
         type: String,
+        default: null
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        default: null
     }
 });
 

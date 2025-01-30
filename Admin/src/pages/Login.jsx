@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AdminContext } from "../context/ContextAdmin";
 
 const Login = () => {
+  const { loginFunc } = useContext(AdminContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,6 +16,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Login işlemi burada yapılacak
+    loginFunc(formData)
     console.log(formData);
   };
 

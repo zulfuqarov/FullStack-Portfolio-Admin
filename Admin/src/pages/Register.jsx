@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AdminContext } from "../context/ContextAdmin";
 const positions = [
   { value: "frontend" },
   { value: "backend" },
@@ -32,9 +33,11 @@ const positions = [
 ];
 
 const Register = () => {
+  const { registerFunc } = useContext(AdminContext);
+
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     position: "",
@@ -47,6 +50,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Form submit işlemi burada yapılacak
+    registerFunc(formData);
     console.log(formData);
   };
 
@@ -57,15 +61,15 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
-              htmlFor="name"
+              htmlFor="firstname"
               className="block text-sm font-medium text-gray-700"
             >
               First Name
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="firstname"
+              name="firstname"
               value={formData.name}
               onChange={handleChange}
               required
@@ -75,15 +79,15 @@ const Register = () => {
 
           <div>
             <label
-              htmlFor="surname"
+              htmlFor="lastname"
               className="block text-sm font-medium text-gray-700"
             >
               Last Name
             </label>
             <input
               type="text"
-              id="surname"
-              name="surname"
+              id="lastname"
+              name="lastname"
               value={formData.surname}
               onChange={handleChange}
               required

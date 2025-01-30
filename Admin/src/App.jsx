@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
@@ -10,13 +10,18 @@ import Experience from "./pages/Experience";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import ContextAdmin from "./context/ContextAdmin";
+import ContextCheckAdmin from "./context/ContextCheckAdmin";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 const App = () => {
   return (
     <div className="h-screen flex flex-col ">
-      <ContextAdmin>
-        <Logo />
-        
+      <ContextCheckAdmin>
+        <ContextAdmin>
+          <Logo />
+
           <Routes>
             <Route path="/" element={<Admin />}>
               <Route index element={<AdminWelcome />} />
@@ -28,8 +33,8 @@ const App = () => {
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
           </Routes>
-        
-      </ContextAdmin>
+        </ContextAdmin>
+      </ContextCheckAdmin>
     </div>
   );
 };

@@ -3,11 +3,10 @@ import User from "../model/userModel.js";
 import portfolio from "../model/portfolioModel.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { CheckToken } from "../middleware/CheckToken.js";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("user")
-})
 
 router.post('/register', async (req, res) => {
     try {
@@ -97,12 +96,11 @@ router.post("/login", async (req, res) => {
             await newPortfolio.save()
 
             await User.findByIdAndUpdate(user._id, { portfolio: newPortfolio._id })
-            
+
             return res.status(200).json({ msg: "Portfolio created successfully and logged in", portfolio: newPortfolio });
         }
 
         return res.status(200).json({ msg: "Logged in successfully", portfolio: user.portfolio });
-
 
     } catch (error) {
         console.log(error)
@@ -132,6 +130,40 @@ router.post("/Logout", async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+
+router.use(CheckToken)
+router.get("/", async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).populate("portfolio")
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" });
+        }
+
+        res.status(200).json(user.portfolio)
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+router.delete("/delete", async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.id);  // _id'siyle silme işlemi
+
+        await portfolio.findOneAndDelete({
+            userId: req.user.id,
+        })
+
+        res.clearCookie("jwtToken", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+        });
+        res.status(200).json({ msg: "Profile deleted successfully." })
+
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 export default router;
 

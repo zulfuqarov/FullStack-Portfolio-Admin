@@ -5,6 +5,11 @@ const portfolioSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    imageId: {
+        type: String,
+        trim: true,
+        default: null
+    },
     firstname: {
         type: String,
         required: true,
@@ -102,6 +107,7 @@ const portfolioSchema = new mongoose.Schema({
         ref: 'user',
         default: null
     }
+
 });
 
 export default mongoose.model('portfolio', portfolioSchema);

@@ -47,6 +47,10 @@ const portfolioSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    facebookUrl: {
+        type: String,
+        default: null
+    },
     experience: [
         {
             role: {

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AdminContext } from "../context/ContextAdmin";
 
 const Contact = () => {
-  const [email, setEmail] = useState("");
+  const { data } = useContext(AdminContext);
+  const { contact } = data;
+  const [email, setEmail] = useState(contact.email || "");
 
   const handleChange = (e) => {
     setEmail(e.target.value);

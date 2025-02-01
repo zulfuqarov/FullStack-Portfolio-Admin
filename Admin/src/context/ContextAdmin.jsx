@@ -31,17 +31,14 @@ const ContextAdmin = ({ children }) => {
   };
 
   // login start
-  // const [loginLoading, setloginLoading] = useState(false);
   const loginFunc = async (data) => {
     try {
-      // setloginLoading(true);
       const response = await apiClient.post("/user/login", data);
       console.log(response.data);
       navigate("/");
     } catch (error) {
       console.log(error);
     } finally {
-      // setloginLoading(false);
     }
   };
 
@@ -55,6 +52,19 @@ const ContextAdmin = ({ children }) => {
     }
   };
 
+  const updatePortfolio = async (data) => {
+    setloadingAdmin(true);
+    try {
+      const response = await apiClient.put("/portfolio", data);
+      setdata(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setloadingAdmin(false);
+    }
+  };
+
   return (
     <AdminContext.Provider
       value={{
@@ -65,6 +75,8 @@ const ContextAdmin = ({ children }) => {
         loadingAdmin,
         loginFunc,
         registerFunc,
+        // update portfolio
+        updatePortfolio,
       }}
     >
       {children}

@@ -1,48 +1,62 @@
-import { useState } from "react";
-function About() {
-  const [formData, setFormData] = useState({
-    fitstName: "",
-    lastName: "",
-    position: "",
-    bio: "",
-    image: null,
-    linkedin: "",
-    youtube: "",
-    github: "",
-    instagram: "",
-    facebook: "",
-  });
+import { useContext, useState } from "react";
+import { AdminContext } from "../context/ContextAdmin";
 
-  const positions = [
-    { value: "frontend" },
-    { value: "backend" },
-    { value: "fullstack" },
-    { value: "mobile" },
-    { value: "data-scientist" },
-    { value: "devops" },
-    { value: "ui-ux" },
-    { value: "game-dev" },
-    { value: "ai-ml" },
-    { value: "cybersecurity" },
-    { value: "graphic-designer" },
-    { value: "motion-designer" },
-    { value: "visual-artist" },
-    { value: "photographer" },
-    { value: "videographer" },
-    { value: "project-manager" },
-    { value: "content-creator" },
-    { value: "marketing-specialist" },
-    { value: "seo-specialist" },
-    { value: "creative-technologist" },
-    { value: "problem-solver" },
-    { value: "innovator" },
-    { value: "lifelong-learner" },
-    { value: "storyteller" },
-    { value: "visionary-thinker" },
-    { value: "aspiring-frontend" },
-    { value: "junior-software" },
-    { value: "creative-enthusiast" },
-  ];
+const positions = [
+  { value: "frontend" },
+  { value: "backend" },
+  { value: "fullstack" },
+  { value: "mobile" },
+  { value: "data-scientist" },
+  { value: "devops" },
+  { value: "ui-ux" },
+  { value: "game-dev" },
+  { value: "ai-ml" },
+  { value: "cybersecurity" },
+  { value: "graphic-designer" },
+  { value: "motion-designer" },
+  { value: "visual-artist" },
+  { value: "photographer" },
+  { value: "videographer" },
+  { value: "project-manager" },
+  { value: "content-creator" },
+  { value: "marketing-specialist" },
+  { value: "seo-specialist" },
+  { value: "creative-technologist" },
+  { value: "problem-solver" },
+  { value: "innovator" },
+  { value: "lifelong-learner" },
+  { value: "storyteller" },
+  { value: "visionary-thinker" },
+  { value: "aspiring-frontend" },
+  { value: "junior-software" },
+  { value: "creative-enthusiast" },
+];
+function About() {
+  const { data, updatePortfolio } = useContext(AdminContext);
+  const {
+    firstname,
+    lastname,
+    position,
+    bio,
+    img,
+    linkedinUrl,
+    youtubeUrl,
+    githubUrl,
+    instagramUrl,
+    facebookUrl,
+  } = data;
+  const [formData, setFormData] = useState({
+    firstname: firstname || "",
+    lastname: lastname || "",
+    position: position || "",
+    bio: bio || "",
+    img: img || "",
+    linkedinUrl: linkedinUrl || "",
+    youtubeUrl: youtubeUrl || "",
+    githubUrl: githubUrl || "",
+    instagramUrl: instagramUrl || "",
+    facebookUrl: facebookUrl || "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,17 +66,27 @@ function About() {
     }));
   };
 
+  const [imgPreview, setimgPreview] = useState(data.img || "");
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
-      image: URL.createObjectURL(file),
+      img: file,
     }));
+
+    setimgPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Portfolio data submitted", formData);
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      data.append(key, formData[key]);
+    });
+    updatePortfolio(data);
   };
 
   return (
@@ -78,10 +102,10 @@ function About() {
         >
           {/* Image Upload */}
           <div className="flex justify-center ">
-            <label htmlFor="image" className="cursor-pointer">
-              {formData.image ? (
+            <label htmlFor="img" className="cursor-pointer">
+              {imgPreview ? (
                 <img
-                  src={formData.image}
+                  src={imgPreview}
                   alt="Portfolio"
                   className="w-32 h-32 rounded-full object-cover border-2 border-teal-600"
                 />
@@ -92,8 +116,8 @@ function About() {
               )}
               <input
                 type="file"
-                id="image"
-                name="image"
+                id="img"
+                name="img"
                 accept="image/*"
                 className="hidden"
                 onChange={handleImageChange}
@@ -107,16 +131,16 @@ function About() {
               {/* Name */}
               <div className="mb-4">
                 <label
-                  htmlFor="fitstName"
+                  htmlFor="firstname"
                   className="block text-sm font-medium text-gray-700"
                 >
                   First Name
                 </label>
                 <input
                   type="text"
-                  id="fitstName"
-                  name="fitstName"
-                  value={formData.name}
+                  id="firstname"
+                  name="firstname"
+                  value={formData.firstname || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter user's name"
@@ -125,16 +149,16 @@ function About() {
 
               <div className="mb-4">
                 <label
-                  htmlFor="lastName"
+                  htmlFor="lastname"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Last Name
                 </label>
                 <input
                   type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.name}
+                  id="lastname"
+                  name="lastname"
+                  value={formData.lastname || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter user's name"
@@ -152,7 +176,7 @@ function About() {
                 <select
                   id="position"
                   name="position"
-                  value={formData.position}
+                  value={formData.position || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                 >
@@ -178,7 +202,7 @@ function About() {
                 <textarea
                   id="bio"
                   name="bio"
-                  value={formData.bio}
+                  value={formData.bio || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Write a short bio"
@@ -191,16 +215,16 @@ function About() {
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <label
-                  htmlFor="linkedin"
+                  htmlFor="linkedinUrl"
                   className="block text-sm font-medium text-gray-700"
                 >
                   LinkedIn
                 </label>
                 <input
                   type="url"
-                  id="linkedin"
-                  name="linkedin"
-                  value={formData.linkedin}
+                  id="linkedinUrl"
+                  name="linkedinUrl"
+                  value={formData.linkedinUrl || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter LinkedIn profile link"
@@ -208,16 +232,16 @@ function About() {
               </div>
               <div>
                 <label
-                  htmlFor="youtube"
+                  htmlFor="youtubeUrl"
                   className="block text-sm font-medium text-gray-700"
                 >
                   YouTube
                 </label>
                 <input
                   type="url"
-                  id="youtube"
-                  name="youtube"
-                  value={formData.youtube}
+                  id="youtubeUrl"
+                  name="youtubeUrl"
+                  value={formData.youtubeUrl || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter YouTube channel link"
@@ -225,16 +249,16 @@ function About() {
               </div>
               <div>
                 <label
-                  htmlFor="github"
+                  htmlFor="githubUrl"
                   className="block text-sm font-medium text-gray-700"
                 >
                   GitHub
                 </label>
                 <input
                   type="url"
-                  id="github"
-                  name="github"
-                  value={formData.github}
+                  id="githubUrl"
+                  name="githubUrl"
+                  value={formData.githubUrl || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter GitHub profile link"
@@ -242,16 +266,16 @@ function About() {
               </div>
               <div>
                 <label
-                  htmlFor="instagram"
+                  htmlFor="instagramUrl"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Instagram
                 </label>
                 <input
                   type="url"
-                  id="instagram"
-                  name="instagram"
-                  value={formData.instagram}
+                  id="instagramUrl"
+                  name="instagramUrl"
+                  value={formData.instagramUrl || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter Instagram profile link"
@@ -259,16 +283,16 @@ function About() {
               </div>
               <div>
                 <label
-                  htmlFor="facebook"
+                  htmlFor="facebookUrl"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Facebook
                 </label>
                 <input
                   type="url"
-                  id="facebook"
-                  name="facebook"
-                  value={formData.facebook}
+                  id="facebookUrl"
+                  name="facebookUrl"
+                  value={formData.facebookUrl || ""}
                   onChange={handleChange}
                   className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
                   placeholder="Enter Facebook profile link"

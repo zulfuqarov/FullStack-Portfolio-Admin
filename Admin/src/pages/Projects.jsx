@@ -1,57 +1,59 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
+import { AdminContext } from "../context/ContextAdmin";
 
 const Projects = () => {
+  const { data, updatePortfolio } = useContext(AdminContext);
   const [formData, setFormData] = useState({
     title: "",
     position: "",
     description: "",
     projectUrl: "",
   });
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([...data.projects]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
 
-  // Yeni proje ekleme
   const handleSubmit = (e) => {
     e.preventDefault();
-    setProjects([...projects, formData]);
+    updatePortfolio({
+      projects: [...projects, formData],
+    });
     setFormData({ title: "", position: "", description: "", projectUrl: "" });
   };
 
-  // Düzenleme için modal açma
   const handleEdit = (index) => {
     setEditingIndex(index);
     setEditData(projects[index]);
     setIsModalOpen(true);
   };
 
-  // Proje silme
   const handleDelete = (index) => {
     const updatedProjects = projects.filter((_, i) => i !== index);
-    setProjects(updatedProjects);
+    updatePortfolio({
+      projects: [...updatedProjects],
+    });
   };
 
-  // Düzenlemeyi kaydetme
   const handleSaveEdit = () => {
     const updatedProjects = [...projects];
     updatedProjects[editingIndex] = editData;
-    setProjects(updatedProjects);
     setIsModalOpen(false);
     setEditData(null);
     setEditingIndex(null);
+    updatePortfolio({
+      projects: [...updatedProjects],
+    });
   };
 
-  // Düzenleme modalını kapatma
   const closeModal = () => {
     setIsModalOpen(false);
     setEditData(null);
     setEditingIndex(null);
   };
 
-  // Input değişikliklerini yakalama
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -64,7 +66,6 @@ const Projects = () => {
 
   return (
     <div className="h-full w-full overflow-y-auto p-6">
-      {/* Yeni Proje Ekleme Formu */}
       <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-2xl font-bold text-teal-600 text-center mb-4">
           Add Project
@@ -147,49 +148,48 @@ const Projects = () => {
         </form>
       </div>
 
-      {/* Proje Listesi */}
       <p className="text-2xl font-semibold text-teal-600 text-center py-6 border-b-2 border-teal-300 w-full mb-[30px]">
         Project List
       </p>
       <div className="max-w-5xl mx-auto space-y-4 p-4">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4 flex items-center justify-between"
-          >
-            <div className="flex flex-col space-y-1">
-              <h3 className="text-lg font-bold text-teal-700">
-                {project.title}
-              </h3>
+        {data.projects &&
+          data.projects.map((project, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4 flex items-center justify-between"
+            >
+              <div className="flex flex-col space-y-1">
+                <h3 className="text-lg font-bold text-teal-700">
+                  {project.title}
+                </h3>
 
-              <p className="text-gray-600 text-sm">
-                <strong>Position:</strong> {project.position}
-              </p>
+                <p className="text-gray-600 text-sm">
+                  <strong>Position:</strong> {project.position}
+                </p>
 
-              <p className="text-gray-500 text-xs">{project.description}</p>
+                <p className="text-gray-500 text-xs">{project.description}</p>
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => handleEdit(index)}
+                  className="group flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
+                >
+                  <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
+                  <span className="hidden sm:block">Edit</span>
+                </button>
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="group flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
+                >
+                  <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
+                  <span className="hidden sm:block">Delete</span>
+                </button>
+              </div>
             </div>
-
-            <div className="flex space-x-4">
-              <button
-                onClick={() => handleEdit(index)}
-                className="group flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
-              >
-                <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:block">Edit</span>
-              </button>
-              <button
-                onClick={() => handleDelete(index)}
-                className="group flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
-              >
-                <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:block">Delete</span>
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
-      {/* Düzenleme Modalı */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white rounded-lg shadow-md p-6 w-96">

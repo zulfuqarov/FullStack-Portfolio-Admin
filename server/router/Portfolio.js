@@ -69,7 +69,6 @@ router.use(CheckToken);
 router.put("/", async (req, res) => {
     const data = req.body
     let image = req.files && req.files.img;
-
     let updatePortfolio = { ...data };
 
     try {

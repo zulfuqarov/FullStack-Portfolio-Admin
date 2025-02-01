@@ -56,10 +56,10 @@ const portfolioSchema = new mongoose.Schema({
             role: {
                 type: String,
             },
-            jobtitle: {
+            jobTitle: {
                 type: String,
             },
-            Description: {
+            description: {
                 type: String,
             }
         }

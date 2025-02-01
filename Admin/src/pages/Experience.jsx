@@ -1,49 +1,55 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
+import { AdminContext } from "../context/ContextAdmin";
 const Experience = () => {
+  const { data, updatePortfolio } = useContext(AdminContext);
+  const { experience } = data;
+
   const [formData, setFormData] = useState({
     role: "",
     jobTitle: "",
     description: "",
   });
-  const [experiences, setExperiences] = useState([]);
+  const [experiences, setExperiences] = useState([...experience]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   const [editingIndex, setEditingIndex] = useState(null);
 
-  // Yeni deneyim ekleme
   const handleSubmit = (e) => {
     e.preventDefault();
-    setExperiences([...experiences, formData]);
+    const newExperiences = [...experiences, formData];
+    // setExperiences([...experiences, formData]);
+    updatePortfolio({
+      experience: newExperiences,
+    });
     setFormData({ role: "", jobTitle: "", description: "" });
   };
 
-  // Düzenleme için modal açma
   const handleEdit = (index) => {
     setEditingIndex(index);
     setEditData(experiences[index]);
     setIsModalOpen(true);
   };
 
-  // Düzenlemeyi kaydetme
   const handleSaveEdit = () => {
     const updatedExperiences = [...experiences];
     updatedExperiences[editingIndex] = editData;
-    setExperiences(updatedExperiences);
+    // setExperiences(updatedExperiences);
     setIsModalOpen(false);
     setEditData(null);
     setEditingIndex(null);
+    updatePortfolio({
+      experience: updatedExperiences,
+    });
   };
 
-  // Düzenleme modalını kapatma
   const closeModal = () => {
     setIsModalOpen(false);
     setEditData(null);
     setEditingIndex(null);
   };
 
-  // Input değişikliklerini yakalama
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -54,10 +60,12 @@ const Experience = () => {
     setEditData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Silme fonksiyonu
   const handleDelete = (index) => {
     const updatedExperiences = experiences.filter((_, i) => i !== index);
-    setExperiences(updatedExperiences);
+    // setExperiences(updatedExperiences);
+    updatePortfolio({
+      experience: updatedExperiences,
+    });
   };
 
   return (
@@ -134,7 +142,7 @@ const Experience = () => {
 
       {/* Deneyim Listesi */}
       <div className="max-w-4xl mx-auto space-y-4">
-        {experiences.map((experience, index) => (
+        {experience && experience.map((experience, index) => (
           <div
             key={index}
             className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-between hover:shadow-xl duration-300 ease-in-out"

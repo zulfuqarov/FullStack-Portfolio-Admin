@@ -4,6 +4,22 @@ import { CheckToken } from "../middleware/CheckToken.js";
 import cloudinary from "cloudinary"
 const router = express.Router();
 
+router.get("/:name", async (req, res) => {
+    const { name } = req.params
+    try {
+        const portfolio = await portfolioModel.findOne({
+            getportfolio: name
+        })
+        if (!portfolio) {
+            return res.status(404).json({ message: "Portfolio not found" });
+        }
+        res.json(portfolio)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Server error" });
+    }
+})
+
 router.use(CheckToken);
 
 // router.put("/:id", async (req, res) => {

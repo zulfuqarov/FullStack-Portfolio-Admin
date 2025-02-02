@@ -20,10 +20,8 @@ const ContextAdmin = ({ children }) => {
     setloadingAdmin(true);
     try {
       const response = await apiClient.get(`/user/`);
-      console.log(response.data);
       setdata(response.data);
     } catch (error) {
-      console.log(error);
       setdata();
     } finally {
       setloadingAdmin(false);
@@ -66,10 +64,8 @@ const ContextAdmin = ({ children }) => {
     try {
       const response = await apiClient.put("/portfolio", data);
       setdata(response.data);
-      console.log(response.data);
       toast.success("Portfolio updated successfully!");
     } catch (error) {
-      console.log(error);
       toast.error("Failed to update portfolio!");
     } finally {
       setloadingAdmin(false);

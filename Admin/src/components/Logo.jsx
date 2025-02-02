@@ -6,11 +6,18 @@ import { FaTimes } from "react-icons/fa";
 import { AdminContext } from "../context/ContextAdmin";
 
 const Logo = () => {
-  const { toogleBars, showBars } = useContext(AdminContext);
+  const { toogleBars, showBars, data } = useContext(AdminContext);
+
   return (
     <div className="flex p-6 fixed w-full top-0 left-0 bg-white z-50 shadow-md ">
       <Link
-        to="http://localhost:5173/"
+        to={`http://localhost:5173/${
+          data
+            ? data.getportfolio
+              ? data.getportfolio
+              : ""
+            : ""
+        }`}
         className="flex items-center text-4xl font-extrabold text-teal-600 hover:text-teal-800 transition duration-300"
         target="_blank"
       >

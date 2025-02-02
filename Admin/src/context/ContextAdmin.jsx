@@ -52,6 +52,16 @@ const ContextAdmin = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const response = await apiClient.post(`/user/logout`);
+      console.log(response.data);
+      navigate("/Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updatePortfolio = async (data) => {
     setloadingAdmin(true);
     try {
@@ -75,6 +85,7 @@ const ContextAdmin = ({ children }) => {
         loadingAdmin,
         loginFunc,
         registerFunc,
+        logout,
         // update portfolio
         updatePortfolio,
       }}

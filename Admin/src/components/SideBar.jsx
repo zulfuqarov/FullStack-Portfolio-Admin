@@ -7,6 +7,8 @@ import { AdminContext } from "../context/ContextAdmin";
 const Sidebar = () => {
   const { showBars } = useContext(AdminContext);
 
+  const { logout } = useContext(AdminContext);
+
   return (
     <div
       className={`
@@ -53,7 +55,10 @@ const Sidebar = () => {
               Portfolio Contact
             </span>
           </Link>
-          <button className="p-2.5 w-full mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-teal-600 text-white">
+          <button
+            onClick={logout}
+            className="p-2.5 w-full mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-teal-600 text-white"
+          >
             <FiLogOut size={20} className="text-white" />
             <span className="text-[15px] ml-4 text-gray-200 font-bold">
               Logout

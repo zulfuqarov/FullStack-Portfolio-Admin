@@ -108,7 +108,7 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.post("/Logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
     const token = req.cookies.jwtToken;
 
     try {

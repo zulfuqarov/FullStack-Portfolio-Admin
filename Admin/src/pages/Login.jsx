@@ -15,7 +15,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Login işlemi burada yapılacak
     loginFunc(formData)
     console.log(formData);
   };

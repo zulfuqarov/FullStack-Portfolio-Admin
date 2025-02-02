@@ -62,7 +62,6 @@ const Experience = () => {
 
   const handleDelete = (index) => {
     const updatedExperiences = experiences.filter((_, i) => i !== index);
-    // setExperiences(updatedExperiences);
     updatePortfolio({
       experience: updatedExperiences,
     });
@@ -70,7 +69,6 @@ const Experience = () => {
 
   return (
     <div className="h-full w-full overflow-y-auto p-6">
-      {/* Yeni Deneyim Ekleme Formu */}
       <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-2xl font-bold text-teal-600 text-center mb-4">
           Add Experience
@@ -140,14 +138,12 @@ const Experience = () => {
         Experience List
       </p>
 
-      {/* Deneyim Listesi */}
       <div className="max-w-4xl mx-auto space-y-4">
         {experience && experience.map((experience, index) => (
           <div
             key={index}
             className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-between hover:shadow-xl duration-300 ease-in-out"
           >
-            {/* Sol Kısım: Metin */}
             <div className="flex flex-col space-y-1">
               <h3 className="text-lg font-semibold text-teal-600">
                 {experience.role}
@@ -158,7 +154,6 @@ const Experience = () => {
               <p className="text-gray-500 text-sm">{experience.description}</p>
             </div>
 
-            {/* Sağ Kısım: Butonlar */}
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => handleEdit(index)}
@@ -179,7 +174,6 @@ const Experience = () => {
         ))}
       </div>
 
-      {/* Düzenleme Modalı */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white rounded-lg shadow-md p-6 w-96">

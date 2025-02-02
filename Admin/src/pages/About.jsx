@@ -100,7 +100,6 @@ function About() {
           className="flex flex-col justify-center items-center pb-[20px]"
           onSubmit={handleSubmit}
         >
-          {/* Image Upload */}
           <div className="flex justify-center ">
             <label htmlFor="img" className="cursor-pointer">
               {imgPreview ? (
@@ -126,7 +125,6 @@ function About() {
           </div>
 
           <div>
-            {/* Position */}
             <div>
               {/* Name */}
               <div className="mb-4">
@@ -211,7 +209,6 @@ function About() {
               </div>
             </div>
 
-            {/* Social Media Links */}
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <label
@@ -301,7 +298,6 @@ function About() {
             </div>
           </div>
 
-          {/* Save Button */}
           <button
             type="submit"
             className="w-[250px] p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500"

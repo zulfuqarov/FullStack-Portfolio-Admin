@@ -49,7 +49,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Form submit işlemi burada yapılacak
     registerFunc(formData);
     console.log(formData);
   };

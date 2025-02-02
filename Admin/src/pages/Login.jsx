@@ -1,23 +1,61 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AdminContext } from "../context/ContextAdmin";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { loginFunc } = useContext(AdminContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validate = () => {
+    let errors = {};
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = "Check your login credentials and try again.";
+    }
+
+    if (formData.password.length < 8 ) {
+      errors.password =
+        "Check your login credentials and try again.";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginFunc(formData)
-    console.log(formData);
+    if (validate()) {
+      loginFunc(formData);
+      console.log(formData);
+    }
   };
+
+  useEffect(() => {
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("jwtToken="));
+
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("jwtToken="));
+
+  if (token) return null;
 
   return (
     <div className="w-full h-full flex justify-center items-center p-6 bg-gray-100">
@@ -37,9 +75,11 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              required
               className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -55,9 +95,11 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              required
               className="w-full p-3 mt-2 border border-teal-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { createContext } from "react";
 import { CheckAdmin } from "./ContextCheckAdmin";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 export const AdminContext = createContext();
 
 const ContextAdmin = ({ children }) => {
@@ -34,31 +34,30 @@ const ContextAdmin = ({ children }) => {
   const loginFunc = async (data) => {
     try {
       const response = await apiClient.post("/user/login", data);
-      console.log(response.data);
+      toast.success("Logged in successfully!");
       navigate("/");
     } catch (error) {
-      console.log(error);
-    } finally {
+      toast.error("Failed to log in!");
     }
   };
 
   const registerFunc = async (data) => {
     try {
       const response = await apiClient.post("/user/register", data);
-      console.log(response.data);
+      toast.success("Registered successfully!");
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to register!");
     }
   };
 
   const logout = async () => {
     try {
       const response = await apiClient.post(`/user/logout`);
-      console.log(response.data);
+      toast.success("Logged out successfully!");
       navigate("/Login");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to log out!");
     }
   };
 
@@ -68,8 +67,10 @@ const ContextAdmin = ({ children }) => {
       const response = await apiClient.put("/portfolio", data);
       setdata(response.data);
       console.log(response.data);
+      toast.success("Portfolio updated successfully!");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to update portfolio!");
     } finally {
       setloadingAdmin(false);
     }

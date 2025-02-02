@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AdminContext } from "../context/ContextAdmin";
+import { toast } from "react-toastify";
 const Experience = () => {
   const { data, updatePortfolio } = useContext(AdminContext);
   const { experience } = data;
@@ -18,12 +19,16 @@ const Experience = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newExperiences = [...experiences, formData];
-    // setExperiences([...experiences, formData]);
-    updatePortfolio({
-      experience: newExperiences,
-    });
-    setFormData({ role: "", jobTitle: "", description: "" });
+
+    if (formData.role || formData.jobTitle || formData.description) {
+      const newExperiences = [...experiences, formData];
+      updatePortfolio({
+        experience: newExperiences,
+      });
+      setFormData({ role: "", jobTitle: "", description: "" });
+    } else {
+      toast.error("Please fill out at least one field.");
+    }
   };
 
   const handleEdit = (index) => {
@@ -139,39 +144,42 @@ const Experience = () => {
       </p>
 
       <div className="max-w-4xl mx-auto space-y-4">
-        {experience && experience.map((experience, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-between hover:shadow-xl duration-300 ease-in-out"
-          >
-            <div className="flex flex-col space-y-1">
-              <h3 className="text-lg font-semibold text-teal-600">
-                {experience.role}
-              </h3>
-              <p className="text-gray-600 text-sm font-medium">
-                {experience.jobTitle}
-              </p>
-              <p className="text-gray-500 text-sm">{experience.description}</p>
-            </div>
+        {experience &&
+          experience.map((experience, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-lg p-4 flex items-center justify-between hover:shadow-xl duration-300 ease-in-out"
+            >
+              <div className="flex flex-col space-y-1">
+                <h3 className="text-lg font-semibold text-teal-600">
+                  {experience.role}
+                </h3>
+                <p className="text-gray-600 text-sm font-medium">
+                  {experience.jobTitle}
+                </p>
+                <p className="text-gray-500 text-sm">
+                  {experience.description}
+                </p>
+              </div>
 
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => handleEdit(index)}
-                className="group flex items-center px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
-              >
-                <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
-                <span>Edit</span>
-              </button>
-              <button
-                onClick={() => handleDelete(index)}
-                className="group flex items-center px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
-              >
-                <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
-                <span>Delete</span>
-              </button>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => handleEdit(index)}
+                  className="group flex items-center px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-full shadow-md hover:from-blue-600 hover:to-blue-700 hover:shadow-lg transition-all"
+                >
+                  <AiOutlineEdit className="mr-2 group-hover:scale-110 transition-transform" />
+                  <span>Edit</span>
+                </button>
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="group flex items-center px-6 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-full shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all"
+                >
+                  <AiOutlineDelete className="mr-2 group-hover:scale-110 transition-transform" />
+                  <span>Delete</span>
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {isModalOpen && (

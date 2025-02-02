@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
 import { AdminContext } from "../context/ContextAdmin";
-
+import { toast } from "react-toastify";
 const Projects = () => {
   const { data, updatePortfolio } = useContext(AdminContext);
   const [formData, setFormData] = useState({
@@ -18,10 +18,20 @@ const Projects = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updatePortfolio({
-      projects: [...projects, formData],
-    });
-    setFormData({ title: "", position: "", description: "", projectUrl: "" });
+
+    if (
+      formData.title ||
+      formData.position ||
+      formData.description ||
+      formData.projectUrl
+    ) {
+      updatePortfolio({
+        projects: [...projects, formData],
+      });
+      setFormData({ title: "", position: "", description: "", projectUrl: "" });
+    } else {
+      toast.error("Please fill out at least one field.");
+    }
   };
 
   const handleEdit = (index) => {

@@ -23,29 +23,41 @@ const ContextAdmin = ({ children }) => {
       setdata(response.data);
     } catch (error) {
       setdata();
+      if (error.response.status === 404) {
+        toast.error("User not found");
+        navigate("/login");
+      }
     } finally {
       setloadingAdmin(false);
     }
   };
 
   // login start
+  const [loginLoading, setloginLoading] = useState(false);
   const loginFunc = async (data) => {
+    setloginLoading(true);
     try {
       const response = await apiClient.post("/user/login", data);
       toast.success("Logged in successfully!");
       navigate("/");
     } catch (error) {
-      toast.error("Failed to log in!");
+      toast.error(error.response.data.msg);
+    } finally {
+      setloginLoading(false);
     }
   };
 
+  const [registerLoading, setregisterLoading] = useState(false);
   const registerFunc = async (data) => {
+    setregisterLoading(true);
     try {
       const response = await apiClient.post("/user/register", data);
       toast.success("Registered successfully!");
       navigate("/login");
     } catch (error) {
-      toast.error("Failed to register!");
+      toast.error(error.response.data.msg);
+    } finally {
+      setregisterLoading(false);
     }
   };
 
@@ -54,6 +66,8 @@ const ContextAdmin = ({ children }) => {
       const response = await apiClient.post(`/user/logout`);
       toast.success("Logged out successfully!");
       navigate("/Login");
+      setloadingAdmin(true);
+      setdata();
     } catch (error) {
       toast.error("Failed to log out!");
     }
@@ -72,6 +86,18 @@ const ContextAdmin = ({ children }) => {
     }
   };
 
+  const deleteAccount = async () => {
+    setloadingAdmin(true);
+    try {
+      const response = await apiClient.delete("/user/delete");
+      toast.success("Account deleted successfully!");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Failed to delete account!");
+      setloadingAdmin(false);
+    }
+  };
+
   return (
     <AdminContext.Provider
       value={{
@@ -81,8 +107,11 @@ const ContextAdmin = ({ children }) => {
         data,
         loadingAdmin,
         loginFunc,
+        loginLoading,
         registerFunc,
+        registerLoading,
         logout,
+        deleteAccount,
         // update portfolio
         updatePortfolio,
       }}

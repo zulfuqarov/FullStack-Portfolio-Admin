@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaAddressCard, FaBriefcase, FaProjectDiagram } from "react-icons/fa";
+import {
+  FaAddressCard,
+  FaBriefcase,
+  FaProjectDiagram,
+  FaTrash,
+} from "react-icons/fa";
 import { FiPhone, FiLogOut } from "react-icons/fi";
 import { AdminContext } from "../context/ContextAdmin";
 
 const Sidebar = () => {
-  const { showBars } = useContext(AdminContext);
-
-  const { logout } = useContext(AdminContext);
+  const { showBars, logout, deleteAccount } = useContext(AdminContext);
 
   return (
     <div
@@ -62,6 +65,15 @@ const Sidebar = () => {
             <FiLogOut size={20} className="text-white" />
             <span className="text-[15px] ml-4 text-gray-200 font-bold">
               Logout
+            </span>
+          </button>
+          <button
+            onClick={deleteAccount}
+            className="p-2.5 w-full mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-red-600 text-white"
+          >
+            <FaTrash size={20} className="text-red-400" />
+            <span className="text-[15px] ml-4 text-gray-200 font-bold">
+              Delete Account
             </span>
           </button>
         </div>

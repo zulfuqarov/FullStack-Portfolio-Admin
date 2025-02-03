@@ -13,7 +13,7 @@ import ContextAdmin from "./context/ContextAdmin";
 import ContextCheckAdmin from "./context/ContextCheckAdmin";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 axios.defaults.withCredentials = true;
 

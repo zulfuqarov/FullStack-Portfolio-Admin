@@ -36,7 +36,7 @@ const positions = [
 const Register = () => {
   const navigate = useNavigate();
 
-  const { registerFunc } = useContext(AdminContext);
+  const { registerFunc, registerLoading } = useContext(AdminContext);
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -66,7 +66,7 @@ const Register = () => {
       errors.email = "Invalid email format.";
     }
 
-    if (formData.password.length > 8 || !/[A-Z]/.test(formData.password)) {
+    if (formData.password.length < 8) {
       errors.password =
         "Password must be max 8 characters and include at least one uppercase letter.";
     }
@@ -84,7 +84,6 @@ const Register = () => {
 
     if (validate()) {
       registerFunc(formData);
-      console.log(formData);
     }
   };
 
@@ -218,7 +217,34 @@ const Register = () => {
             type="submit"
             className="w-full p-3 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 focus:outline-none"
           >
-            Register
+            {registerLoading ? (
+              <div className="flex justify-center items-center">
+                <svg
+                  className="animate-spin h-5 w-5 mr-3 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0"
+                  ></path>
+                </svg>
+                loading...
+              </div>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 

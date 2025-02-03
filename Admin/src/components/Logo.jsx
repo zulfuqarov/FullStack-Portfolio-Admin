@@ -12,11 +12,7 @@ const Logo = () => {
     <div className="flex p-6 fixed w-full top-0 left-0 bg-white z-50 shadow-md ">
       <Link
         to={`http://localhost:5173/${
-          data
-            ? data.getportfolio
-              ? data.getportfolio
-              : ""
-            : ""
+          data ? (data.getportfolio ? data.getportfolio : "") : ""
         }`}
         className="flex items-center text-4xl font-extrabold text-teal-600 hover:text-teal-800 transition duration-300"
         target="_blank"
@@ -24,13 +20,14 @@ const Logo = () => {
         <span className="text-teal-600">get</span>
         <span className="text-teal-400 ml-1">portfolio</span>
       </Link>
-
-      <button
-        onClick={toogleBars}
-        className="hidden max-[991px]:block text-3xl text-teal-600 ml-auto cursor-pointer "
-      >
-        {showBars ? <FaTimes /> : <FaBars />}
-      </button>
+      {data && (
+        <button
+          onClick={toogleBars}
+          className="hidden max-[991px]:block text-3xl text-teal-600 ml-auto cursor-pointer "
+        >
+          {showBars ? <FaTimes /> : <FaBars />}
+        </button>
+      )}
     </div>
   );
 };

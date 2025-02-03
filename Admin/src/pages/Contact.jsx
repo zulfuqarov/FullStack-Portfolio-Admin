@@ -26,12 +26,11 @@ const Contact = () => {
     updatePortfolio({
       contact: formData,
     });
-    console.log(formData);
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+    <div className="w-full h-auto flex items-center justify-center ">
+      <div className=" p-8  max-w-md w-full h-full bg-white">
         <h2 className="text-2xl font-semibold text-teal-600 mb-4 text-center">
           Contact Information
         </h2>
@@ -39,7 +38,10 @@ const Contact = () => {
           Please add your contact details.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col space-y-4 max-[768px]:pb-[20px]"
+        >
           {["email", "phone", "address", "city", "country"].map((field) => (
             <div key={field}>
               <label className="block text-sm font-medium text-teal-700 mb-2 capitalize">

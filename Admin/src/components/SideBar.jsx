@@ -5,12 +5,13 @@ import {
   FaBriefcase,
   FaProjectDiagram,
   FaTrash,
+  FaShare,
 } from "react-icons/fa";
 import { FiPhone, FiLogOut } from "react-icons/fi";
 import { AdminContext } from "../context/ContextAdmin";
 
 const Sidebar = () => {
-  const { showBars, logout, deleteAccount } = useContext(AdminContext);
+  const { showBars, logout, deleteAccount, data } = useContext(AdminContext);
 
   return (
     <div
@@ -56,6 +57,18 @@ const Sidebar = () => {
             <FiPhone size={20} className="text-white" />
             <span className="text-[15px] ml-4 text-gray-200 font-bold">
               Portfolio Contact
+            </span>
+          </Link>
+          <Link
+            to={`http://localhost:5173/${
+              data ? (data.getportfolio ? data.getportfolio : "") : ""
+            }`}
+            target="_blank"
+            className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-teal-600 text-white"
+          >
+            <FaShare size={20} className="text-white" />
+            <span className="text-[15px] ml-4 text-gray-200 font-bold">
+              Visit your portfolio{" "}
             </span>
           </Link>
           <button

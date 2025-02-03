@@ -136,6 +136,11 @@ router.get("/", async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate("portfolio")
         if (!user) {
+            res.clearCookie("jwtToken", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
             return res.status(404).json({ msg: "User not found" });
         }
 
@@ -147,7 +152,7 @@ router.get("/", async (req, res) => {
 })
 router.delete("/delete", async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.user.id);  // _id'siyle silme işlemi
+        await User.findByIdAndDelete(req.user.id);
 
         await portfolio.findOneAndDelete({
             userId: req.user.id,

@@ -16,9 +16,12 @@ const Sidebar = () => {
   return (
     <div
       className={`
-    h-full pt-[10px] relative max-[991px]:fixed max-[991px]:z-50 top-0 max-[991px]:${
-      showBars ? "fixed" : "hidden"
-    }
+      h-full pt-[10px] relative 
+      ${
+        showBars
+          ? "max-[991px]:fixed max-[991px]:z-50 top-0"
+          : "max-[991px]:hidden"
+      }
     `}
     >
       <div className="h-full ">
